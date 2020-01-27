@@ -98,11 +98,11 @@ cp AppDef.json.example          build_history/$TIMESTAMP/AppDef.json
 cp help.html.example            build_history/$TIMESTAMP/help.html
 cd build_history/$TIMESTAMP
 
-sed -i "s/[from_image]/${IMAGE}/g" Dockerfile
-sed -i "s/[dockerfile_name]/${NAME}/g" AppDef.json
-sed -i "s/[dockerfile_description]/${DESC}/g" AppDef.json
+sed -i "s/__from_image__/${IMAGE}/g" Dockerfile
+sed -i "s/__dockerfile_name__/${NAME}/g" AppDef.json
+sed -i "s/__dockerfile_description__/${DESC}/g" AppDef.json
 
-if grep -q "[update machine types here]" AppDef.json; then
+if grep -q "__update machine types here__" AppDef.json; then
   echo "Please update machine types in AppDef.json.example before building application. "
   echo ""
   list

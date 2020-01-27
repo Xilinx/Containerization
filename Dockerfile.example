@@ -1,4 +1,4 @@
-FROM [from_image]
+FROM __from_image__
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}

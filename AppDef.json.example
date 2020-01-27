@@ -1,13 +1,13 @@
 {
-    "name": "[dockerfile_name]",
-    "description": "[dockerfile_description]",
+    "name": "__dockerfile_name__",
+    "description": "__dockerfile_description__",
     "author": "Xilinx",
     "licensed": true,
     "classifications": [
         "Software Development/Software Testing"
     ],
     "machines": [
-        "[update machine types here]"
+        "__update machine types here__"
     ],
     "vault-types": [
         "FILE",

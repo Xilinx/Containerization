@@ -1,2 +1,2 @@
-build_hitory/*
-!build_hitory/.gitkeep
+/build_hitory/*
+!/build_hitory/.gitkeep
