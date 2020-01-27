@@ -34,6 +34,7 @@ list() {
     echo "nx6u_xdma_201830_2      xilinx_u250_xdma_201830_2     16 core, 128GB RAM, Xilinx Alveo U250 FPGA 2019.1"
     echo "nx6u_xdma_201830_2_2_3  xilinx_u250_xdma_201830_2     16 core, 128GB RAM, Xilinx Alveo U250 FPGA 2019.2"
     echo "nx7u_xdma_201920_1      xilinx_u280_xdma_201920_1     16 core, 128GB RAM, Xilinx Alveo U280 FPGA 2019.2"
+}
 
 notice_disclaimer() {
     cat doc/notice_disclaimer.txt
@@ -52,29 +53,23 @@ confirm() {
     esac
 }
 
-notice_disclaimer
-confirm 
-
-COMMAND="/bin/bash"
-PLATFORM="alveo-u200"
-UPDATE=0
 
 docker info > /dev/null
 if [ $? != 0 ] ; then
-	docker info
-	exit 1
+    docker info
+    exit 1
 fi
 
 
 while true
 do
 case "$1" in
-	-i | --image           ) IMAGE="$2"    ; shift 2 ;;
+    -i | --image           ) IMAGE="$2"    ; shift 2 ;;
     -t | --tag             ) TAG="$2"      ; shift 2 ;;
     -n | --name            ) NAME="$2"     ; shift 2 ;;
     -d | --description     ) DESC="$2"     ; shift 2 ;;
     -p | --push            ) PUSH="1"      ; shift 1 ;;
-	-h | --help            ) usage         ; exit  1 ;;
+    -h | --help            ) usage         ; exit  1 ;;
 *) break ;;
 esac
 done
@@ -108,7 +103,7 @@ sed -i "s/[dockerfile_name]/${NAME}/g" AppDef.json
 sed -i "s/[dockerfile_description]/${DESC}/g" AppDef.json
 
 if grep -q "[update machine types here]" AppDef.json; then
-  echo "Please update machine type in AppDef.json.example before building application. "
+  echo "Please update machine types in AppDef.json.example before building application. "
   echo ""
   list
   exit 1
