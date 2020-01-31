@@ -6,11 +6,15 @@ This project provides script to build Docker Application for Nimbix Jarvice plat
 
 1. Clone nimbixlize repository
 
-`git clone https://gitenterprise.xilinx.com/FaaSApps/nimbixlize.git`
+```
+git clone https://gitenterprise.xilinx.com/FaaSApps/nimbixlize.git
+```
 
 2. Go to nimbixlize repository
 
-`cd nimbixlize`
+```
+cd nimbixlize
+```
 
 3. Modify file `AppDef.json.example`. Update attribute `machines` on line 10. Replace `__update machine types here__` with machine type id list below. 
 
@@ -33,7 +37,7 @@ nx7u_xdma_201920_1 | xilinx_u280_xdma_201920_1 | 16 core, 128GB RAM, Xilinx Alve
 
 For example:
 ```
-	"machines": [
+    "machines": [
         "n2",
         "n3",
         "nx7u_xdma_201920_1"
@@ -54,4 +58,6 @@ For example:
 
 5. Push built docker image
 
-`docker push $(IMAGE ID)`
+```
+docker push $(IMAGE ID)
+```
