@@ -9,9 +9,9 @@ usage() {
     echo ""
     echo "./utility.sh "
     echo "   -i --image        [Image ID] (required)"
-    echo "   -t --tag          [tag] (required)"
+    echo "   -t --tag          [New Image ID] (required)"
     echo "   -n --name         [App name] (required)"
-    echo "   -d --description  [App Des] (not required)"
+    echo "   -d --description  [App Description] (not required)"
     echo "   -p --push         [push after build] (not required)"
 
 }
@@ -31,6 +31,7 @@ list() {
     echo "nx5u_xdma_201830_2      xilinx_u200_xdma_201830_2     16 core, 128GB RAM, Xilinx Alveo U200 FPGA 2019.1"
     echo "nx5u_xdma_201830_2_2_3  xilinx_u200_xdma_201830_2     16 core, 128GB RAM, Xilinx Alveo U200 FPGA 2019.2"
     echo "nx6u                    xilinx_u250_xdma_201820_1     16 core, 128GB RAM, Xilinx Alveo U250 FPGA 2018.2 XDF"
+    echo "nx6u_xdma_201830_1      xilinx_u250_xdma_201830_1     16 core, 128GB RAM, Xilinx Alveo U250 FPGA 2018.3"
     echo "nx6u_xdma_201830_2      xilinx_u250_xdma_201830_2     16 core, 128GB RAM, Xilinx Alveo U250 FPGA 2019.1"
     echo "nx6u_xdma_201830_2_2_3  xilinx_u250_xdma_201830_2     16 core, 128GB RAM, Xilinx Alveo U250 FPGA 2019.2"
     echo "nx7u_xdma_201920_1      xilinx_u280_xdma_201920_1     16 core, 128GB RAM, Xilinx Alveo U280 FPGA 2019.2"
@@ -76,16 +77,29 @@ done
 
 if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; usage; exit 1 ; fi
 
-if [[ -z "$IMAGE" ]]; then
-    read -r -p "${1:-Please enter your image id :} " IMAGE
-fi
+while [[ -z "$IMAGE" ]]; do
+    read -r -p "${1:-Please enter your origin docker image id :} " IMAGE
+    if [[ -z "$IMAGE" ]]; then
+        echo "Image ID can NOT be empty! "
+    fi
+done
 
-if [[ -z "$TAG" ]]; then
-    read -r -p "${1:-Please enter your new image id (ie. $IMAGE-nimbix) :} " TAG
-fi
+while [[ -z "$TAG" ]]; do
+    read -r -p "${1:-Please enter your building Nimbix docker image id (ie. $IMAGE-nimbix) :} " TAG
+    if [[ -z "$TAG" ]]; then
+        echo "New Image ID can NOT be empty! "
+    fi
+done
 
-if [[ -z "$NAME" ]]; then
-    read -r -p "${1:-Please enter your application name :} " NAME
+while [[ -z "$NAME" ]]; do
+    read -r -p "${1:-Please enter your building Nimbix application name :} " NAME
+    if [[ -z "$NAME" ]]; then
+        echo "App name can NOT be empty! "
+    fi
+done
+
+if [[ -z "$DESC" ]]; then
+    read -r -p "${1:-Please enter your building Nimbix application description (optional) :} " NAME
 fi
 
 
@@ -110,3 +124,9 @@ if grep -q "__update machine types here__" AppDef.json; then
 fi
 
 echo "docker build -t $TAG ."
+
+if [[ "$PUSH" == "1" ]]; then
+    echo "docker push $TAG"
+else
+    echo "Push docker image $TAG by: docker push $TAG"
+fi
