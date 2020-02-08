@@ -1,21 +1,21 @@
 {
 	"os_version": {
 		"ubuntu-16.04":{
-			"xrt-version":{
+			"xrt_version":{
 				"2018.3":{"platform": ["alveo-u200", "alveo-u250"]},
 				"2019.1":{"platform": ["alveo-u200", "alveo-u250", "alveo-u280"]},
 				"2019.2":{"platform": ["alveo-u200", "alveo-u250", "alveo-u280"]}
 			}
 		},
 		"ubuntu-18.04":{
-			"xrt-version":{
+			"xrt_version":{
 				"2018.3":{"platform": ["alveo-u200", "alveo-u250"]},
 				"2019.1":{"platform": ["alveo-u200", "alveo-u250", "alveo-u280"]},
 				"2019.2":{"platform": ["alveo-u200", "alveo-u250", "alveo-u280"]}
 			}
 		},
 		"centos":{
-			"xrt-version":{
+			"xrt_version":{
 				"2018.3":{"platform": ["alveo-u200", "alveo-u250"]},
 				"2019.1":{"platform": ["alveo-u200", "alveo-u250", "alveo-u280"]},
 				"2019.2":{"platform": ["alveo-u200", "alveo-u250", "alveo-u280"]}

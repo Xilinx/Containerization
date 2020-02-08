@@ -72,9 +72,9 @@ with open('spec.json') as d:
 image_url = "" 
 
 if app_info['os_version'] in spec['os_version']:
-    if app_info['xrt_version'] in spec['os_version']['xrt_version']:
-        if app_info['platform'] in spec['os_version']['xrt_version']['platform']:
-            image_url = "xilinx/xilinx_runtime_base:" + app_info['platform'] + app_info['xrt_version'] + app_info['os_version']
+    if app_info['xrt_version'] in spec['os_version'][app_info['os_version']]['xrt_version']:
+        if app_info['platform'] in spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform']:
+            image_url = "xilinx/xilinx_runtime_base:" + app_info['platform'] + "-" + app_info['xrt_version'] + "-" + app_info['os_version']
 
 if not image_url:
     print("XRT and platform do NOT match! ")
@@ -82,12 +82,10 @@ if not image_url:
     exit(1)
 
 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-path = "build_history" + timestamp
+path = "build_history/" + timestamp
 
 try:
     os.mkdir(path)
-    shutil.copy('Dockerfile.example', path + "/Dockerfile")
-    shutil.copy('AppDef.json.example', path + "/AppDef.json")
     shutil.copy('help.html.example', path + "/help.html")
 except OSError:
     print (path)
@@ -98,7 +96,7 @@ copies = []
 for pro in provisioners:
     ctype = pro['type']
     if ctype == 'cmd':
-        commands.append("RUN " + pro['inline'])
+        commands.append("RUN " + " & ".join(pro['inline']))
     elif ctype == 'file':
         if not os.path.exists(pro['source']):
             print(pro['source'] + "  does NOT exists!")
@@ -107,14 +105,15 @@ for pro in provisioners:
         filename = os.path.basename(pro['source'])
         copies.append("COPY " + filename + " " + pro['destination'])
 
-with open(path + "/Dockerfile", "a") as d:
+with open("Dockerfile.example", "r") as f:
     s = d.read()
     s = s.replace("__from_image__", image_url)
-    d.write(s)
-    for copy in copies:
-        d.write(copy+"\n")
-    for command in commands:
-        d.write(command + "\n")
+    with open(path + "/Dockerfile", "w") as d:
+        d.write(s)
+        for copy in copies:
+            d.write(copy+"\n")
+        for command in commands:
+            d.write(command + "\n")
 
 appdef['name'] = metadata['app_name']
 appdef['description'] = metadata['app_description']
@@ -127,4 +126,3 @@ if not metadata['batch_mode']:
 
 with open(path + '/AppDef.json', a) as d:
     json.dump(appdef, d)
-
