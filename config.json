@@ -1,0 +1,25 @@
+{
+    "nimbix_metadata":{
+        "app_name": "__dockerfile_name__",
+        "app_description": "__dockerfile_description__",
+        "machines":["n2", "n3"],
+        "desktop_mode": true,
+        "batch_mode": true
+    },
+    "provisioners":[
+        {
+            "type": "cmd",
+            "inline": [""]
+        },
+        {
+            "type": "file",
+            "source": "source file path",
+            "destination": "destination file path in container",
+        }
+    ],
+    "app_info":{
+        "xrt_version": "2019.2",
+        "os_version": "ubuntu-16.04",
+        "platform": "alveo-u200"
+    }
+}
