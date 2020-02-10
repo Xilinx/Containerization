@@ -70,11 +70,12 @@ with open('spec.json') as d:
 
 # Xilinx Base Runtim Image Url
 image_url = "" 
-
+target_platform
 if app_info['os_version'] in spec['os_version']:
     if app_info['xrt_version'] in spec['os_version'][app_info['os_version']]['xrt_version']:
         if app_info['platform'] in spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform']:
-            image_url = "xilinx/xilinx_runtime_base:" + app_info['platform'] + "-" + app_info['xrt_version'] + "-" + app_info['os_version']
+            image_url = "xilinx/xilinx_runtime_base:" + "alveo-" + "-" + app_info['xrt_version'] + "-" + app_info['os_version']
+            target_platform = spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform'][app_info['platform']]
 
 if not image_url:
     print("XRT and platform do NOT match! ")
@@ -106,7 +107,7 @@ for pro in provisioners:
         copies.append("COPY " + filename + " " + pro['destination'])
 
 with open("Dockerfile.example", "r") as f:
-    s = d.read()
+    s = f.read()
     s = s.replace("__from_image__", image_url)
     with open(path + "/Dockerfile", "w") as d:
         d.write(s)
@@ -121,8 +122,9 @@ if not metadata['desktop_mode']:
     del appdef['commands']['server']
 if not metadata['batch_mode']:
     del appdef['commands']['batch']
+if target_platform not in appdef['machines']:
+    appdef['machines'].append(target_platform)
 
 
-
-with open(path + '/AppDef.json', a) as d:
+with open(path + '/AppDef.json', "w") as d:
     json.dump(appdef, d)
