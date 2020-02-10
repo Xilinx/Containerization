@@ -70,7 +70,7 @@ with open('spec.json') as d:
 
 # Xilinx Base Runtim Image Url
 image_url = "" 
-target_platform
+target_platform = ""
 if app_info['os_version'] in spec['os_version']:
     if app_info['xrt_version'] in spec['os_version'][app_info['os_version']]['xrt_version']:
         if app_info['platform'] in spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform']:
