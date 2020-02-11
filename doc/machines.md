@@ -11,8 +11,8 @@ In the Nimbix Cloud the following architectures are supported:
 
 # Complete Machine Type Examples
 
-Machine Type ID | Platform | XRT| Mark
-------------- | -------- | -------
+Machine Type ID | Platform | XRT | Mark
+--------------- | -------- | --- | ----
 n2 | N/A | N/A | 8 core, 64GB RAM (CPU only)
 n3 | N/A | N/A | 16 core, 128GB RAM (CPU only)
 n4 | N/A | N/A | 16 core, 256GB RAM (CPU only)
