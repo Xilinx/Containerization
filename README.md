@@ -18,7 +18,7 @@ git clone https://gitenterprise.xilinx.com/FaaSApps/nimbixlize.git
 cd nimbixlize
 ```
 
-3. Update `config.json` file to specify all infomation for your application. See [here](doc/config.md) for all references.  
+3. Update `config.json` file to specify all information for your application. See [here](doc/config.md) for all references.  
 
 4. Build Nimbix image
 
@@ -59,9 +59,9 @@ If you need Nimbix account, please contact Tianyu Li (tianyul@xilinx.com) or Chu
 
 ![Pull Image 2](doc/pull2.png)
 
-7. If steps go well, you should see Containter Pull Response pop window with `{ "status": "Pull successfully scheduled" }`. You can also check pulling status by clicking `History` under app menu. 
+7. If steps go well, you should see Container Pull Response pop window with `{ "status": "Pull successfully scheduled" }`. You can also check pulling status by clicking `History` under app menu. 
 
-8. After pulling compelted, click your new application to launch the job. 
+8. After pulling completed, click your new application to launch the job. 
 
 ![Launch app](doc/launch.png)
 

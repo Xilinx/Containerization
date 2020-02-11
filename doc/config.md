@@ -4,19 +4,19 @@ The config file describes the application interface for Xilinx FPGA applications
 
 The config file is a simple JSON object which is used to define:
 
-* Nimbix metadate (name, description, machines and modes)
+* Nimbix metadata (name, description, machines and modes)
 * Application information (XRT version, OS version and target platform)
 * Provisioners (support two functions: inline command and copy files)
 * Post processor (build repository and tag)
 
 # Reference
 
-## Nimbix metadate
+## Nimbix metadata
 
 Key | Type | Required/Optional | Description | Example
 ----| ---- | ----------------- | ----------- | -------
 app_name | string | required | Defines the human-readable name of the application. | "Xilinx Vitis Application 2019.2"
-app_description | string | optinal | Description of the application used in the application market place icon.| "The Vitis unified software platform enables..."
+app_description | string | optional | Description of the application used in the application market place icon. | "The Vitis unified software platform enables..."
 machines | list of strings | required | Target platforms of application on Nimbix. See [Machines](machines.md) for more information. | ["n2", "n3", "nx7u_xdma_201920_1"]
 desktop_mode | boolean | required | Determine application contains desktop mode or not. Default `true` | true
 batch_mode | boolean | required | Determine application contains batch mode or not. Default `true` | true 
@@ -47,8 +47,8 @@ Copy local files to your Nimbix applications.
 Key | Type | Required/Optional | Description | Example
 ----| ---- | ----------------- | ----------- | -------
 type | string | required | Type of provisioner. Must be `file` | "file"
-source | path | required | Soure path of your local file | `/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/validate.exe`
-destination | path | required | Destination path of file be located in application | `/opt/xilinx/test/validate.exe`
+source | path | required | Source path of your local file | `/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/validate.exe`
+destination | path | required | Destination path of file located in application | `/opt/xilinx/test/validate.exe`
 
 ## Post processor
 
