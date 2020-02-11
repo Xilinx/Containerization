@@ -45,6 +45,7 @@ with open('config.json') as d:
 metadata = repos['nimbix_metadata']
 provisioners = repos['provisioners']
 app_info = repos['app_info']
+post_processors = repos['post_processors']
 
 with open('AppDef.json.example') as d:
     appdef = json.load(d)
@@ -65,6 +66,14 @@ if not app_info['platform']:
     print("Platform can NOT be empty!")
     exit(1)
 
+if post_processors['push_after_build']:
+    if not post_processors['repository']:
+        print("Repository can NOT be empty!")
+        exit(1)
+    if not post_processors['tag']:
+        print("Tag can NOT be empty!")
+        exit(1)
+
 with open('spec.json') as d:
     spec = json.load(d)
 
@@ -74,7 +83,7 @@ target_platform = ""
 if app_info['os_version'] in spec['os_version']:
     if app_info['xrt_version'] in spec['os_version'][app_info['os_version']]['xrt_version']:
         if app_info['platform'] in spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform']:
-            image_url = "xilinx/xilinx_runtime_base:" + "alveo-" + "-" + app_info['xrt_version'] + "-" + app_info['os_version']
+            image_url = "xilinx/xilinx_runtime_base:" + "alveo" + "-" + app_info['xrt_version'] + "-" + app_info['os_version']
             target_platform = spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform'][app_info['platform']]
 
 if not image_url:
@@ -122,9 +131,19 @@ if not metadata['desktop_mode']:
     del appdef['commands']['server']
 if not metadata['batch_mode']:
     del appdef['commands']['batch']
+appdef["machines"] = metadata["machines"]
 if target_platform not in appdef['machines']:
     appdef['machines'].append(target_platform)
 
 
 with open(path + '/AppDef.json', "w") as d:
     json.dump(appdef, d)
+
+#Build application
+subprocess.check_output(
+    "docker build -t " + post_processors['repository'] + ":" + post_processors["tag"] + " -f " + path + "/Dockerfile",
+    stderr=subprocess.STDOUT)
+
+if post_processors['push_after_build']:
+    subprocess.check_output("docekr push " + post_processors['repository'] + ":" + post_processors["tag"],
+    stderr=subprocess.STDOUT)

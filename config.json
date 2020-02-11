@@ -1,25 +1,27 @@
 {
     "nimbix_metadata":{
-        "app_name": "__dockerfile_name__",
-        "app_description": "__dockerfile_description__",
+        "app_name": "nx7u test",
+        "app_description": "nx7u test",
         "machines":["n2", "n3", "nx7u_xdma_201920_1"],
         "desktop_mode": true,
         "batch_mode": true
     },
     "provisioners":[
         {
-            "type": "cmd",
-            "inline": []
+            "type": "file",
+            "source": "/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/validate.exe",
+            "destination": "/opt/xilinx/test/validate.exe"
         },
         {
             "type": "file",
-            "source": "source_file_path",
-            "destination": "destination_file_path_in_container"
+            "source": "/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/verify.xclbin",
+            "destination": "/opt/xilinx/test/verify.xclbin"
         }
     ],
-    "post-processors": {
+    "post_processors": {
         "repository": "",
-        "tag": ""
+        "tag": "",
+        "push_after_build": true
     },
     "app_info":{
         "xrt_version": "2019.2",
