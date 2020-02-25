@@ -1,4 +1,4 @@
-# Nimbix Container Flow for Library and Application
+# Nimbix Container Creation Flow for Library and Application
 
 This project provides script to build Docker Application (image) for Nimbix Jarvice platform. 
 
@@ -6,21 +6,21 @@ This project provides script to build Docker Application (image) for Nimbix Jarv
 
 ### Docker
 
-Docker is a set of platform-as-a-service (PaaS) products that use OS-level virtualization . Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package. For more docker information, please refer [Docker Documentation](https://docs.docker.com). 
+Docker is a set of platform-as-a-service (PaaS) products that use OS-level virtualization . Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package. For more docker information, please refer to the [Docker Documentation](https://docs.docker.com). 
 
 ### Nimbix Cloud 
 
 #### JARVICE™
 
-JARVICE is the platform that powers the Nimbix Cloud. Built from the ground up for today’s most demanding workflows, it delivers superior performance, capabilities, and ease of use – whether enabling simulation, cognitive, life sciences, or other applications. For more information, please refer [The Nimbix Cloud Platform](https://www.nimbix.net/platform).
+JARVICE is the platform that powers the Nimbix Cloud. Built from the ground up for today’s most demanding workflows, it delivers superior performance, capabilities, and ease of use – whether enabling simulation, cognitive, life sciences, or other applications. For more information, please refer to the [The Nimbix Cloud Platform](https://www.nimbix.net/platform).
 
 #### PushToCompute™
 
-PushToCompute™ is an advanced developer pipeline that enables you to create, build, and deploy containerized workflows. The JARVICE container runtime is optimized for high performance and accelerated applications, and powers all workflows available in the Nimbix Cloud. For more information, please refer [PushToCompute™](https://www.nimbix.net/pushtocompute).
+PushToCompute™ is an advanced developer pipeline that enables you to create, build, and deploy containerized workflows. The JARVICE container runtime is optimized for high performance and accelerated applications, and powers all workflows available in the Nimbix Cloud. For more information, please refer to the [PushToCompute™](https://www.nimbix.net/pushtocompute).
 
 ## Getting Started
 
-To distribute FPGA application on Nimbix, you need build docker images contain FPGA app files (like xclbin files) and Nimbxi metadata. The tutorial contains two parts: build Nimbxi application flow and PushToCompute™ flow. 
+To distribute FPGA applications on Nimbix, you need build docker images contain FPGA app files (like xclbin files) and Nimbix metadata. The tutorial contains two parts: build Nimbix application flow and PushToCompute™ flow. 
 
 ### Build Nimbix application flow
 
