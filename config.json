@@ -8,6 +8,10 @@
     },
     "provisioners":[
         {
+            "type": "shell",
+            "inline": ["mkdir -p /opt/xilinx/test", "apt-get update"]
+        },
+        {
             "type": "file",
             "source": "/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/validate.exe",
             "destination": "/opt/xilinx/test/validate.exe"
@@ -19,8 +23,8 @@
         }
     ],
     "post_processors": {
-        "repository": "",
-        "tag": "",
+        "repository": "xilinx/test",
+        "tag": "nx7u-test",
         "push_after_build": true
     },
     "app_info":{
