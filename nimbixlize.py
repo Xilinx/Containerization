@@ -3,6 +3,7 @@
 import json
 import subprocess
 import os
+import sys
 import datetime
 import shutil 
 
@@ -13,6 +14,23 @@ def list_tags() :
     print ("alveo-u200     2018.3 /2019.1 / 2019.2      Ubuntu 16.04 / Ubuntu 18.04 / CentOS")
     print ("alveo-u250     2018.3 /2019.1 / 2019.2      Ubuntu 16.04 / Ubuntu 18.04 / CentOS")
     print ("alveo-u280     2019.2                       Ubuntu 16.04 / Ubuntu 18.04 / CentOS")
+
+def print_help():
+    print("usage: ./nimbixlize.py [-h] [-q]")
+    print("")
+    print("optional arguments:")
+    print("  -h, --help            show this help message and exit")
+    print("  -q, --quiet           only print error messages on stdout")
+
+argvs = sys.argv[1:]
+isQuiet = False
+
+for argv in argvs:
+    if argv == "-q" or argv == "--quiet":
+        isQuiet = True
+    elif argv == "-h" or argv == "--help":
+        print_help()
+        exit(0)
 
 with open('config.json') as d:
     repos = json.load(d)
@@ -65,6 +83,7 @@ if not image_url:
     list_tags()
     exit(1)
 
+dockerfile_example = "Dockerfile_Centos.example" if app_info['os_version'] == "centos" else "Dockerfile_Ubuntu.example"
 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 path = "build_history/" + timestamp
 
@@ -91,7 +110,7 @@ for pro in provisioners:
     else:
         print("Warning: Unknown type: " + ctype + "! ")
 
-with open("Dockerfile.example", "r") as f:
+with open(dockerfile_example, "r") as f:
     s = f.read()
     s = s.replace("__from_image__", image_url)
     with open(path + "/Dockerfile", "w") as d:
@@ -114,14 +133,25 @@ with open(path + '/AppDef.json', "w") as d:
     json.dump(appdef, d, indent=4)
 
 #Build application
-subprocess.check_output(
+if isQuiet: 
+    subprocess.check_output(
     "docker build -t " + post_processors['repository'] + ":" + post_processors["tag"] + " " + path,
     stderr=subprocess.STDOUT, shell=True)
 
-if post_processors['push_after_build']:
-    print("docker push " + post_processors['repository'] + ":" + post_processors["tag"])
-    subprocess.check_output("docker push " + post_processors['repository'] + ":" + post_processors["tag"],
-    stderr=subprocess.STDOUT, shell=True)
+    if post_processors['push_after_build']:
+        # print("docker push " + post_processors['repository'] + ":" + post_processors["tag"])
+        subprocess.check_output("docker push " + post_processors['repository'] + ":" + post_processors["tag"],
+        stderr=subprocess.STDOUT, shell=True)
+else: 
+    print("Build docker image: " + post_processors['repository'] + ":" + post_processors["tag"])
+    subprocess.check_call(
+        "docker build -t " + post_processors['repository'] + ":" + post_processors["tag"] + " " + path,
+        stderr=subprocess.STDOUT, shell=True)
+
+    if post_processors['push_after_build']:
+        print("docker push " + post_processors['repository'] + ":" + post_processors["tag"])
+        subprocess.check_call("docker push " + post_processors['repository'] + ":" + post_processors["tag"],
+        stderr=subprocess.STDOUT, shell=True)
 
 print("Build successfully!")
 exit(0)
