@@ -1,8 +1,35 @@
-# Nimbix Container Flow for Library and Application
+# Nimbix Container Creation Flow for Library and Application
 
 This project provides script to build Docker Application (image) for Nimbix Jarvice platform. 
 
-## Usage
+## Background
+
+### Docker
+
+Docker is a set of platform-as-a-service (PaaS) products that use OS-level virtualization. Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package. For more docker information, please refer to the [Docker Documentation](https://docs.docker.com). 
+
+### Nimbix Cloud 
+
+#### JARVICE™
+
+JARVICE is the platform that powers the Nimbix Cloud. Built from the ground up for today’s most demanding workflows, it delivers superior performance, capabilities, and ease of use – whether enabling simulation, cognitive, life sciences, or other applications. For more information, please refer to the [The Nimbix Cloud Platform](https://www.nimbix.net/platform).
+
+#### PushToCompute™
+
+PushToCompute™ is an advanced developer pipeline that enables you to create, build, and deploy containerized workflows. The JARVICE container runtime is optimized for high performance and accelerated applications, and powers all workflows available in the Nimbix Cloud. For more information, please refer to the [PushToCompute™](https://www.nimbix.net/pushtocompute).
+
+## Getting Started
+
+To distribute FPGA applications on Nimbix, you need build docker images contain FPGA app files (like xclbin files) and Nimbix metadata. The tutorial contains three parts: prerequisites, build Nimbix application flow and PushToCompute™ flow. 
+
+### Prerequisites
+
+Before to build docker image and distribute it to Nimbix, you need:
+
+* Have an account on Docker Hub or your own docker registry. ([Create a Docker ID](https://hub.docker.com/signup))
+* Create a repository on Docker Hub or your own docker registry.
+* Install and active docker service on your local machine. ([Docker install](https://docs.docker.com/install/))
+* Have an account on Nimbix Jarvice platform. (If you need Nimbix account, please contact Tianyu Li (tianyul@xilinx.com) or Chuck Song (songc@xilinx.com).)
 
 ### Build Nimbix application flow
 
@@ -26,9 +53,9 @@ cd nimbixlize
 ./nimbixlize.py
 ```
 
-5. Push built docker image (optional)
+5. Push built docker image 
 
-Push docker image if attribute `push_after_build` is `false` in `post_processors` section in config.json. 
+Only need to push docker image if attribute `push_after_build` is `false` in `post_processors` section in config.json. Otherwise the image will be pushed automatically. 
 
 ```
 docker push $(IMAGE ID)

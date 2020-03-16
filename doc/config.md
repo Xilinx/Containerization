@@ -18,8 +18,8 @@ Key | Type | Required/Optional | Description | Example
 app_name | string | required | Defines the human-readable name of the application. | "Xilinx Vitis Application 2019.2"
 app_description | string | optional | Description of the application used in the application market place icon. | "The Vitis unified software platform enables..."
 machines | list of strings | required | Target platforms of application on Nimbix. See [Machines](machines.md) for more information. | ["n2", "n3", "nx7u_xdma_201920_1"]
-desktop_mode | boolean | required | Determine application contains desktop mode or not. Default `true` | true
-batch_mode | boolean | required | Determine application contains batch mode or not. Default `true` | true 
+desktop_mode | boolean | required | Enable desktop mode. Default `true` | true
+batch_mode | boolean | required | Enable batch mode. Default `true` | true 
 
 ## Application information
 
@@ -54,9 +54,11 @@ destination | path | required | Destination path of file located in application 
 
 Key | Type | Required/Optional | Description | Example
 ----| ---- | ----------------- | ----------- | -------
-repository | string | required | Repository of application (docker image) | xilinx/xilinx_nimbix_application
+repository | string | required | Repository of application (docker image) | xilinx/xilinx_nimbix_application*
 tag | string | required | Tag of application (docker image) | vitis-2019.2
 push_after_build | boolean | required | Determine application (docker image) push after build or not. Default `true` | true
+
+>The `repository` can be a DockerHub repository or a private repository. Learn more on [docker tag](https://docs.docker.com/engine/reference/commandline/tag/). 
 
 # Config file example
 
@@ -70,6 +72,10 @@ push_after_build | boolean | required | Determine application (docker image) pus
         "batch_mode": true
     },
     "provisioners":[
+    	{
+    		"type": "shell",
+    		"inline": ["mkdir -p /opt/xilinx/test", "apt-get update"]
+    	},
         {
             "type": "file",
             "source": "/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/validate.exe",
