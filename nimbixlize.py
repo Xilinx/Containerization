@@ -5,7 +5,15 @@ import subprocess
 import os
 import sys
 import datetime
-import shutil 
+import shutil, errno
+
+def copyanything(src, dst):
+    try:
+        shutil.copytree(src, dst)
+    except OSError as exc: # python >2.5
+        if exc.errno == errno.ENOTDIR:
+            shutil.copy(src, dst)
+        else: raise
 
 def list_tags() :
     print ("Available platform and XRT combination:")
@@ -104,8 +112,8 @@ for pro in provisioners:
         if not os.path.exists(pro['source']):
             print(pro['source'] + "  does NOT exists!")
             exit(1)
-        shutil.copy(pro['source'], path + "/")
         filename = os.path.basename(pro['source'])
+        copyanything(pro['source'], path + "/" + filename)
         commands.append("COPY " + filename + " " + pro['destination'])
     else:
         print("Warning: Unknown type: " + ctype + "! ")
