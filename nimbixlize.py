@@ -112,7 +112,8 @@ for pro in provisioners:
         if not os.path.exists(pro['source']):
             print(pro['source'] + "  does NOT exists!")
             exit(1)
-        filename = os.path.basename(pro['source'])
+        filename = os.path.basename(pro['destination'])
+        if not filename: filename = os.path.basename(pro['source'])
         copyanything(pro['source'], path + "/" + filename)
         commands.append("COPY " + filename + " " + pro['destination'])
     else:
