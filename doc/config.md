@@ -1,17 +1,26 @@
 # Introducing the config file
 
-The config file describes the application interface for Xilinx FPGA applications that are deployed on JARVICE with PushToCompute™.
+The config file describes the application interface for Xilinx FPGA applications that are deployed on multiple cloud vendors.
 
 The config file is a simple JSON object which is used to define:
 
-* Nimbix metadata (name, description, machines and modes)
+* Vendor
+* Metadata (metadata required by cloud vendors)
 * Application information (XRT version, OS version and target platform)
 * Provisioners (support two functions: inline command and copy files)
 * Post processor (build repository and tag)
 
 # Reference
 
-## Nimbix metadata
+## Vendor
+Key | Type | Required/Optional | Description | Example
+----| ---- | ----------------- | ----------- | -------
+vendor | string | required | Application target cloud vendor. For now, only support "nimbix" | "nimbix"
+
+
+## Metadata
+
+### Nimbix metadata
 
 Key | Type | Required/Optional | Description | Example
 ----| ---- | ----------------- | ----------- | -------
@@ -64,7 +73,8 @@ push_after_build | boolean | required | Determine application (docker image) pus
 
 ```
 {
-    "nimbix_metadata":{
+    "vendor": "nimbix",
+    "metadata":{
         "app_name": "nx7u test",
         "app_description": "nx7u test",
         "machines":["n2", "n3", "nx7u_xdma_201920_1"],

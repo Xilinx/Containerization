@@ -1,6 +1,6 @@
-# Nimbix Container Creation Flow for Library and Application
+# Containerization Flow for Library and Application on Cloud Vendors
 
-This project provides script to build Docker Application (image) for Nimbix Jarvice platform. 
+This project provides script to build Docker Application (image) for multiple cloud vendor: Nimbix, AWS and Azure. For now, it only supports Nimbix JARVICE™ platform.
 
 ## Background
 
@@ -20,37 +20,37 @@ PushToCompute™ is an advanced developer pipeline that enables you to create, b
 
 ## Getting Started
 
-To distribute FPGA applications on Nimbix, you need build docker images contain FPGA app files (like xclbin files) and Nimbix metadata. The tutorial contains three parts: prerequisites, build Nimbix application flow and PushToCompute™ flow. 
+To distribute FPGA applications on cloud vendors, you need build docker images contain FPGA app files (like xclbin files) and required metadata. The tutorial mainly contains two parts: prerequisites and buuild application flow. 
 
 ### Prerequisites
 
-Before to build docker image and distribute it to Nimbix, you need:
+Before to build docker image and distribute it to could vendor, you need:
 
 * Have an account on Docker Hub or your own docker registry. ([Create a Docker ID](https://hub.docker.com/signup))
 * Create a repository on Docker Hub or your own docker registry.
 * Install and active docker service on your local machine. ([Docker install](https://docs.docker.com/install/))
-* Have an account on Nimbix Jarvice platform. (If you need Nimbix account, please contact Tianyu Li (tianyul@xilinx.com) or Chuck Song (songc@xilinx.com).)
+* To distribute app on Nimbix Jarvice platform, you need to have an account on Nimbix Jarvice platform. (If you need Nimbix account, please contact Tianyu Li (tianyul@xilinx.com) or Chuck Song (songc@xilinx.com).)
 
-### Build Nimbix application flow
+### Build  application flow
 
-1. Clone nimbixlize repository
-
-```
-git clone https://gitenterprise.xilinx.com/FaaSApps/nimbixlize.git
-```
-
-2. Go to nimbixlize repository
+1. Clone Containerization  repository
 
 ```
-cd nimbixlize
+git clone https://gitenterprise.xilinx.com/FaaSApps/Containerization .git
+```
+
+2. Go to Containerization  repository
+
+```
+cd Containerization 
 ```
 
 3. Update `config.json` file to specify all information for your application. See [here](doc/config.md) for all references.  
 
-4. Build Nimbix image
+4. Build image
 
 ```
-./nimbixlize.py
+./containerize.py
 ```
 
 5. Push built docker image 
@@ -60,6 +60,9 @@ Only need to push docker image if attribute `push_after_build` is `false` in `po
 ```
 docker push $(IMAGE ID)
 ```
+
+## Reference
+
 ### Nimbix PushToCompute™ flow
 
 1. Login to [Jarvice platform](https://platform.jarvice.com/). 
@@ -92,7 +95,8 @@ If you need Nimbix account, please contact Tianyu Li (tianyul@xilinx.com) or Chu
 
 ![Launch app](doc/launch.png)
 
-## Reference
+
+### Useful links
 
 Please check these links for more details. 
 

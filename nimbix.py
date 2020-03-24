@@ -16,63 +16,46 @@ def copyanything(src, dst):
         else: raise
 
 def list_tags() :
-    print ("Available platform and XRT combination:")
-    print ("")
-    print ("Platform       XRT Version                  OS Version")
-    print ("alveo-u200     2018.3 /2019.1 / 2019.2      Ubuntu 16.04 / Ubuntu 18.04 / CentOS")
-    print ("alveo-u250     2018.3 /2019.1 / 2019.2      Ubuntu 16.04 / Ubuntu 18.04 / CentOS")
-    print ("alveo-u280     2019.2                       Ubuntu 16.04 / Ubuntu 18.04 / CentOS")
-
-def print_help():
-    print("usage: ./nimbixlize.py [-h] [-q]")
-    print("")
-    print("optional arguments:")
-    print("  -h, --help            show this help message and exit")
-    print("  -q, --quiet           only print error messages on stdout")
-
-argvs = sys.argv[1:]
-isQuiet = False
-
-for argv in argvs:
-    if argv == "-q" or argv == "--quiet":
-        isQuiet = True
-    elif argv == "-h" or argv == "--help":
-        print_help()
-        exit(0)
+    sys.exit("XRT and platform do NOT match! \
+    Available platform and XRT combination:\
+    \
+    Platform       XRT Version                  OS Version\
+    alveo-u200     2018.3 /2019.1 / 2019.2      Ubuntu 16.04 / Ubuntu 18.04 / CentOS\
+    alveo-u250     2018.3 /2019.1 / 2019.2      Ubuntu 16.04 / Ubuntu 18.04 / CentOS\
+    alveo-u280     2019.2                       Ubuntu 16.04 / Ubuntu 18.04 / CentOS")
 
 with open('config.json') as d:
     repos = json.load(d)
 
-metadata = repos['nimbix_metadata']
+vendor = repos['vendor']
+metadata = repos['metadata']
 provisioners = repos['provisioners']
 app_info = repos['app_info']
 post_processors = repos['post_processors']
+example_path = "examples/nimbix/"
 
-with open('AppDef.json.example') as d:
+if vendor != "nimbix":
+    sys.exit("Vendor is NOT supported! ")
+
+with open(example_path+'AppDef.json.example') as d:
     appdef = json.load(d)
 
 if not metadata['app_name']:
-    print("Application name can NOT be empty!")
-    exit(1)
+    sys.exit("Application name can NOT be empty!")
 
 if not app_info['os_version']:
-    print("OS version can NOT be empty!")
-    exit(1)
+    sys.exit("OS version can NOT be empty!")
 
 if not app_info['xrt_version']:
-    print("XRT version can NOT be empty!")
-    exit(1)
+    sys.exit("XRT version can NOT be empty!")
 
 if not app_info['platform']:
-    print("Platform can NOT be empty!")
-    exit(1)
+    sys.exit("Platform can NOT be empty!")
 
 if not post_processors['repository']:
-    print("Repository can NOT be empty!")
-    exit(1)
+    sys.exit("Repository can NOT be empty!")
 if not post_processors['tag']:
-    print("Tag can NOT be empty!")
-    exit(1)
+    sys.exit("Tag can NOT be empty!")
 
 with open('spec.json') as d:
     spec = json.load(d)
@@ -87,20 +70,17 @@ if app_info['os_version'] in spec['os_version']:
             target_platform = spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform'][app_info['platform']]
 
 if not image_url:
-    print("XRT and platform do NOT match! ")
     list_tags()
-    exit(1)
 
-dockerfile_example = "Dockerfile_Centos.example" if app_info['os_version'] == "centos" else "Dockerfile_Ubuntu.example"
+dockerfile_example = example_path + ("Dockerfile_Centos.example" if app_info['os_version'] == "centos" else "Dockerfile_Ubuntu.example")
 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 path = "build_history/" + timestamp
 
 try:
     os.mkdir(path)
-    shutil.copy('help.html.example', path + "/help.html")
+    shutil.copy(example_path+'help.html.example', path + "/help.html")
 except OSError:
-    print (path)
-    exit(1)
+    sys.exit(path)
 
 commands = []
 
@@ -110,8 +90,7 @@ for pro in provisioners:
         commands.append("RUN " + " & ".join(pro['inline']))
     elif ctype == 'file':
         if not os.path.exists(pro['source']):
-            print(pro['source'] + "  does NOT exists!")
-            exit(1)
+            sys.exit(pro['source'] + "  does NOT exists!")
         filename = os.path.basename(pro['destination'])
         if not filename: filename = os.path.basename(pro['source'])
         copyanything(pro['source'], path + "/" + filename)
@@ -142,25 +121,16 @@ with open(path + '/AppDef.json', "w") as d:
     json.dump(appdef, d, indent=4)
 
 #Build application
-if isQuiet: 
-    subprocess.check_output(
+
+print("Build docker image: " + post_processors['repository'] + ":" + post_processors["tag"])
+subprocess.check_call(
     "docker build -t " + post_processors['repository'] + ":" + post_processors["tag"] + " " + path,
     stderr=subprocess.STDOUT, shell=True)
 
-    if post_processors['push_after_build']:
-        # print("docker push " + post_processors['repository'] + ":" + post_processors["tag"])
-        subprocess.check_output("docker push " + post_processors['repository'] + ":" + post_processors["tag"],
-        stderr=subprocess.STDOUT, shell=True)
-else: 
-    print("Build docker image: " + post_processors['repository'] + ":" + post_processors["tag"])
-    subprocess.check_call(
-        "docker build -t " + post_processors['repository'] + ":" + post_processors["tag"] + " " + path,
-        stderr=subprocess.STDOUT, shell=True)
-
-    if post_processors['push_after_build']:
-        print("docker push " + post_processors['repository'] + ":" + post_processors["tag"])
-        subprocess.check_call("docker push " + post_processors['repository'] + ":" + post_processors["tag"],
-        stderr=subprocess.STDOUT, shell=True)
+if post_processors['push_after_build']:
+    print("docker push " + post_processors['repository'] + ":" + post_processors["tag"])
+    subprocess.check_call("docker push " + post_processors['repository'] + ":" + post_processors["tag"],
+    stderr=subprocess.STDOUT, shell=True)
 
 print("Build successfully!")
 exit(0)

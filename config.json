@@ -1,5 +1,6 @@
 {
-    "nimbix_metadata":{
+    "vendor": "nimbix",
+    "metadata":{
         "app_name": "nx7u test",
         "app_description": "nx7u test",
         "machines":["n2", "n3", "nx7u_xdma_201920_1"],
