@@ -36,10 +36,10 @@ Before to build docker image and distribute it to could vendor, you need:
 1. Clone Containerization  repository
 
 ```
-git clone https://gitenterprise.xilinx.com/FaaSApps/Containerization .git
+git clone https://gitenterprise.xilinx.com/FaaSApps/Containerization.git
 ```
 
-2. Go to Containerization  repository
+2. Go to Containerization repository
 
 ```
 cd Containerization 
