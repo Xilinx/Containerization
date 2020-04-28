@@ -79,6 +79,7 @@ path = "build_history/" + timestamp
 try:
     os.mkdir(path)
     shutil.copy(example_path+'help.html.example', path + "/help.html")
+    shutil.copy(example_path+'xilinx_runtime.sh.example', path + "/xilinx_runtime.sh")
 except OSError:
     sys.exit(path)
 
