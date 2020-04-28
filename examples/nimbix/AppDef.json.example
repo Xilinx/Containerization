@@ -24,7 +24,7 @@
             "parameters": {}
         },
         "batch": {
-            "path": "/usr/local/bin/xilinx_runtime",
+            "path": "/usr/local/bin/xilinx_runtime.sh",
             "interactive": false,
             "name": "Batch Mode",
             "description": "Run your accelerated application in batch mode..",
