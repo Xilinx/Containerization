@@ -31,6 +31,6 @@
     "app_info":{
         "xrt_version": "2019.2",
         "os_version": "ubuntu-16.04",
-        "platform": "alveo-u280"
+        "platform": ["alveo-u280"]
     }
 }

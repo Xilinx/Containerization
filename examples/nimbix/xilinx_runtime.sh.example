@@ -2,4 +2,4 @@
 
 source /opt/xilinx/xrt/setup.sh
 
-eval $3
+eval $1

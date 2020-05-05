@@ -62,12 +62,15 @@ with open('spec.json') as d:
 
 # Xilinx Base Runtim Image Url
 image_url = "" 
-target_platform = ""
+target_platforms = []
 if app_info['os_version'] in spec['os_version']:
     if app_info['xrt_version'] in spec['os_version'][app_info['os_version']]['xrt_version']:
-        if app_info['platform'] in spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform']:
-            image_url = "xilinx/xilinx_runtime_base:" + "alveo" + "-" + app_info['xrt_version'] + "-" + app_info['os_version']
-            target_platform = spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform'][app_info['platform']]
+        image_url = "xilinx/xilinx_runtime_base:" + "alveo" + "-" + app_info['xrt_version'] + "-" + app_info['os_version']
+        for platform in app_info['platform']:
+            if platform in spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform']:
+                target_platforms.append(spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform'][platform])
+            else:
+                print(" [Warning] Invalide platform: " + platform)
 
 if not image_url:
     list_tags()
@@ -114,8 +117,9 @@ if not metadata['desktop_mode']:
 if not metadata['batch_mode']:
     del appdef['commands']['batch']
 appdef["machines"] = metadata["machines"]
-if target_platform not in appdef['machines']:
-    appdef['machines'].append(target_platform)
+for target_platform in target_platforms:
+    if target_platform not in appdef['machines']:
+        appdef['machines'].append(target_platform)
 
 
 with open(path + '/AppDef.json', "w") as d:

@@ -11,4 +11,4 @@ RUN yum -y update && \
 ADD help.html /etc/NAE/help.html
 ADD AppDef.json /etc/NAE/AppDef.json
 ADD xilinx_runtime.sh /usr/local/bin/xilinx_runtime.sh
-RUN chmod 755 /usr/local/bin/xilinx_runtime.sh
+RUN chmod 755 /usr/local/bin/xilinx_runtime.sh; echo "source /opt/xilinx/xrt/setup.sh" >> /etc/skel/.bashrc

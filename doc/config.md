@@ -36,7 +36,7 @@ Key | Type | Required/Optional | Description | Available values
 ----| ---- | ----------------- | ----------- | -------
 xrt_version | string | required | XRT version of application | 2018.3 / 2019.1 / 2019.2
 os_version | string | required | OS version application running on | ubuntu-16.04 / ubuntu-18.04 / centos
-platform | string | required | Target platform of application | alveo-u200 / alveo-u250 / alveo-u280
+platform | list of strings | required | Target platforms of application | alveo-u200 / alveo-u250 / alveo-u280
 
 ## Provisioners
 
@@ -105,7 +105,7 @@ push_after_build | boolean | required | Determine application (docker image) pus
     "app_info":{
         "xrt_version": "2019.2",
         "os_version": "ubuntu-16.04",
-        "platform": "alveo-u280"
+        "platform": ["alveo-u280"]
     }
 }
 ```

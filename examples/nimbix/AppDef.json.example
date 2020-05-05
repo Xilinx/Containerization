@@ -29,35 +29,12 @@
             "name": "Batch Mode",
             "description": "Run your accelerated application in batch mode..",
             "parameters": {
-                "-tt": {
-                    "positional": false,
-                    "required": false,
-                    "type": "BOOL",
-                    "name": "Timeline trace",
-                    "description": "Download results in sdaccel_timeline_trace.csv when the job completes.",
-                    "value": false
-                },
-                "-dp": {
-                    "positional": false,
-                    "required": false,
-                    "type": "BOOL",
-                    "name": "Device profiling",
-                    "description": "Turn on device profiling and include in sdaccel_timeline_trace.csv file. Note that the profile summary (sdaccel_profile_summary.csv) is always created then downloaded when the job completes.",
-                    "value": false
-                },
-                "executable": {
+                "command": {
                     "positional": true,
                     "required": true,
-                    "type": "FILE",
-                    "name": "Executable",
-                    "description": "Select executable to run"
-                },
-                "args": {
-                    "positional": true,
-                    "required": false,
                     "type": "STR",
-                    "name": "Arguments",
-                    "description": "Command-line arguments for executable"
+                    "name": "Command",
+                    "description": "Command to run"
                 }
             }
         }
