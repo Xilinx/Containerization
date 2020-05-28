@@ -91,12 +91,11 @@ commands = []
 for pro in provisioners:
     ctype = pro['type']
     if ctype == 'shell':
-        commands.append("RUN " + " & ".join(pro['inline']))
+        commands.append("RUN " + " && ".join(pro['inline']))
     elif ctype == 'file':
         if not os.path.exists(pro['source']):
             sys.exit(pro['source'] + "  does NOT exists!")
-        filename = os.path.basename(pro['destination'])
-        if not filename: filename = os.path.basename(pro['source'])
+        filename = os.path.basename(os.path.normpath(pro['destination']))
         copyanything(pro['source'], path + "/" + filename)
         commands.append("COPY " + filename + " " + pro['destination'])
     else:
