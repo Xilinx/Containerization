@@ -56,8 +56,8 @@ Copy local files to your Nimbix applications.
 Key | Type | Required/Optional | Description | Example
 ----| ---- | ----------------- | ----------- | -------
 type | string | required | Type of provisioner. Must be `file` | "file"
-source | path | required | Source path of your local file | `/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/validate.exe`
-destination | path | required | Destination path of file located in application | `/opt/xilinx/test/validate.exe`
+source | path | required | Source path of your local file or directory | `/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/validate.exe`
+destination | path | required | Destination path of file or directory located in application | `/opt/xilinx/test/validate.exe`
 
 ## Post processor
 
