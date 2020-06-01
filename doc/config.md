@@ -15,7 +15,7 @@ The config file is a simple JSON object which is used to define:
 ## Vendor
 Key | Type | Required/Optional | Description | Example
 ----| ---- | ----------------- | ----------- | -------
-vendor | string | required | Application target cloud vendor. For now, only support "nimbix" | "nimbix"
+vendor | string | required | Application target cloud vendor. For now, only support "nimbix" and "on_premise"| "nimbix"
 
 
 ## Metadata
