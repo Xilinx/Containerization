@@ -20,6 +20,9 @@ vendor | string | required | Application target cloud vendor. For now, only supp
 
 ## Metadata
 
+### On Premise
+No metatdata needed. 
+
 ### Nimbix metadata
 
 Key | Type | Required/Optional | Description | Example

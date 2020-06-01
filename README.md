@@ -1,6 +1,6 @@
 # Containerization Flow for Library and Application on Cloud Vendors
 
-This project provides script to build Docker Application (image) for multiple cloud vendor: Nimbix, AWS and Azure. For now, it only supports Nimbix JARVICE™ platform.
+This project provides script to build Docker Application (image) for multiple cloud vendor: Nimbix, AWS and Azure. For now, it only supports Nimbix JARVICE™ platform and on premise.
 
 ## Background
 

@@ -13,7 +13,7 @@ def print_help():
     print("  -h, --help            show this help message and exit")
     print("  -q, --quiet           only print error messages on stdout")
 
-support_vendors = ['nimbix']
+support_vendors = ['nimbix', 'on_premise']
 
 argvs = sys.argv[1:]
 isQuiet = False
@@ -31,7 +31,7 @@ with open('config.json') as d:
 vendor = repos['vendor']
 
 if vendor not in support_vendors:
-    sys.exit("Vendor is NOT supported! ")
+    sys.exit("Vendor is NOT supported! Support Vendors: " + ", ".join(support_vendors))
 
 if isQuiet: 
     subprocess.check_output("./" + vendor + ".py", stderr=subprocess.STDOUT, shell=True)
