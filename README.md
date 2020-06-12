@@ -95,6 +95,7 @@ If you need Nimbix account, please contact Tianyu Li (tianyul@xilinx.com) or Chu
 
 ![Launch app](doc/launch.png)
 
+9. You can change the application icon by clicking menu icon, then "Edit", then "Change Icon". 
 
 ### Useful links
 

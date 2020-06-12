@@ -101,6 +101,17 @@ for pro in provisioners:
     else:
         print("Warning: Unknown type: " + ctype + "! ")
 
+if "app_cover_image" in metadata:
+    app_cover_image = metadata["app_cover_image"]
+    if not os.path.exists(app_cover_image):
+        print("[Warning]: " + app_cover_image + " is not exists! ")
+    elif not app_cover_image.lower().endswith('.png'):
+        print("[Warning]: Cover image must be PNG image! ")
+    else:
+        copyanything(app_cover_image, path + "/" + "screenshot.png")
+        commands.append("COPY screenshot.png /etc/NAE/screenshot.png")
+        commands.append("RUN chmod 644 /etc/NAE/screenshot.png")
+
 with open(dockerfile_example, "r") as f:
     s = f.read()
     s = s.replace("__from_image__", image_url)
@@ -135,6 +146,9 @@ if post_processors['push_after_build']:
     print("docker push " + post_processors['repository'] + ":" + post_processors["tag"])
     subprocess.check_call("docker push " + post_processors['repository'] + ":" + post_processors["tag"],
     stderr=subprocess.STDOUT, shell=True)
+else:
+    print("Push docker image by running:")
+    print("    docker push " + post_processors['repository'] + ":" + post_processors["tag"])
 
 print("Build successfully!")
 exit(0)

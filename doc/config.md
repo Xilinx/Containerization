@@ -29,6 +29,7 @@ Key | Type | Required/Optional | Description | Example
 ----| ---- | ----------------- | ----------- | -------
 app_name | string | required | Defines the human-readable name of the application. | "Xilinx Vitis Application 2019.2"
 app_description | string | optional | Description of the application used in the application market place icon. | "The Vitis unified software platform enables..."
+app_cover_image | string | optional | The path of cover image of the application. The image must be PNG image. | "/home/user/cover_image.png"
 machines | list of strings | required | Target platforms of application on Nimbix. See [Machines](machines.md) for more information. | ["n2", "n3", "nx7u_xdma_201920_1"]
 desktop_mode | boolean | required | Enable desktop mode. Default `true` | true
 batch_mode | boolean | required | Enable batch mode. Default `true` | true 
@@ -80,6 +81,7 @@ push_after_build | boolean | required | Determine application (docker image) pus
     "metadata":{
         "app_name": "nx7u test",
         "app_description": "nx7u test",
+        "app_cover_image": "/home/user/cover_image.png"
         "machines":["n2", "n3", "nx7u_xdma_201920_1"],
         "desktop_mode": true,
         "batch_mode": true
