@@ -25,3 +25,4 @@ nx6u_xdma_201830_1 | xilinx_u250_xdma_201830_1 | 2018.3 | 16 core, 128GB RAM, Xi
 nx6u_xdma_201830_2 | xilinx_u250_xdma_201830_2 | 2019.1 | 16 core, 128GB RAM, Xilinx Alveo U250 FPGA
 nx6u_xdma_201830_2_2_3 | xilinx_u250_xdma_201830_2 | 2019.2 | 16 core, 128GB RAM, Xilinx Alveo U250 FPGA
 nx7u_xdma_201920_1 | xilinx_u280_xdma_201920_1 | 2019.2 | 16 core, 128GB RAM, Xilinx Alveo U280 FPGA
+nx_u50_gen3x16_xdma_201920_3 | xilinx_u50_gen3x16_xdma_201920_3 | 2019.2 | 16 core, 128GB RAM, Xilinx Alveo U50 FPGA

@@ -22,7 +22,8 @@ def list_tags() :
     Platform       XRT Version                  OS Version\
     alveo-u200     2018.3 /2019.1 / 2019.2      Ubuntu 16.04 / Ubuntu 18.04 / CentOS\
     alveo-u250     2018.3 /2019.1 / 2019.2      Ubuntu 16.04 / Ubuntu 18.04 / CentOS\
-    alveo-u280     2019.2                       Ubuntu 16.04 / Ubuntu 18.04 / CentOS")
+    alveo-u280     2019.2                       Ubuntu 16.04 / Ubuntu 18.04 / CentOS\
+    alveo-u50      2019.2                       Ubuntu 16.04 / Ubuntu 18.04 / CentOS")
 
 with open('config.json') as d:
     repos = json.load(d)
@@ -60,6 +61,8 @@ if not post_processors['tag']:
 with open('spec.json') as d:
     spec = json.load(d)
 
+commands = []
+
 # Xilinx Base Runtim Image Url
 image_url = "" 
 target_platforms = []
@@ -69,6 +72,9 @@ if app_info['os_version'] in spec['os_version']:
         for platform in app_info['platform']:
             if platform in spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform']:
                 target_platforms.append(spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform'][platform])
+                if platform == "alveo-u50" and app_info['xrt_version'] == "2019.2":
+                    image_url += "-u50"
+                    commands.append("ENV INTERNAL_BUILD=1")
             else:
                 print(" [Warning] Invalide platform: " + platform)
 
@@ -85,8 +91,6 @@ try:
     shutil.copy(example_path+'xilinx_runtime.sh.example', path + "/xilinx_runtime.sh")
 except OSError:
     sys.exit(path)
-
-commands = []
 
 for pro in provisioners:
     ctype = pro['type']
