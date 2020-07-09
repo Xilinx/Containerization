@@ -31,6 +31,8 @@ vendor = repos['vendor']
 provisioners = repos['provisioners']
 app_info = repos['app_info']
 post_processors = repos['post_processors']
+if "metadata" in repos: 
+    metadata = repos['metadata']
 
 if vendor != "on_premise":
     sys.exit("Vendor is NOT supported! ")
@@ -94,6 +96,8 @@ with open(path + "/Dockerfile", "w") as d:
     d.write("From " + image_url + "\n")
     for command in commands:
         d.write(command + "\n")
+    if metadata and "entrypoint" in metadata:
+        d.write("ENTRYPOINT " + metadata['entrypoint'])
 
 #Build application
 

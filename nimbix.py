@@ -106,11 +106,21 @@ if "app_cover_image" in metadata:
     if not os.path.exists(app_cover_image):
         print("[Warning]: " + app_cover_image + " is not exists! ")
     elif not app_cover_image.lower().endswith('.png'):
-        print("[Warning]: Cover image must be PNG image! ")
+        print("[Warning]: Cover image must be PNG image! Skip adding cover image! ")
     else:
         copyanything(app_cover_image, path + "/" + "screenshot.png")
         commands.append("COPY screenshot.png /etc/NAE/screenshot.png")
         commands.append("RUN chmod 644 /etc/NAE/screenshot.png")
+
+if "app_license" in metadata:
+    app_license = metadata["app_license"]
+    if not os.path.exists(app_license):
+        print("[Warning]: " + app_license + " is not exists! ")
+    elif not app_license.lower().endswith('.txt'):
+        print("[Warning]: License file must be txt file! Skip adding license file! ")
+    else:
+        copyanything(app_license, path + "/" + "license.txt")
+        commands.append("COPY license.txt /etc/NAE/license.txt")
 
 with open(dockerfile_example, "r") as f:
     s = f.read()

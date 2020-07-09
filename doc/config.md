@@ -21,7 +21,9 @@ vendor | string | required | Application target cloud vendor. For now, only supp
 ## Metadata
 
 ### On Premise
-No metatdata needed. 
+Key | Type | Required/Optional | Description | Example
+----| ---- | ----------------- | ----------- | -------
+entrypoint | string | optional | An ENTRYPOINT allows you to configure a container that will run as an executable. | '["executable", "param1", "param2"]'
 
 ### Nimbix metadata
 
@@ -30,6 +32,7 @@ Key | Type | Required/Optional | Description | Example
 app_name | string | required | Defines the human-readable name of the application. | "Xilinx Vitis Application 2019.2"
 app_description | string | optional | Description of the application used in the application market place icon. | "The Vitis unified software platform enables..."
 app_cover_image | string | optional | The path of cover image of the application. The image must be PNG image. | "/home/user/cover_image.png"
+app_license | string | optional | The path of license of the application. The image must be txt file. | "/home/user/license.txt"
 machines | list of strings | required | Target platforms of application on Nimbix. See [Machines](machines.md) for more information. | ["n2", "n3", "nx7u_xdma_201920_1"]
 desktop_mode | boolean | required | Enable desktop mode. Default `true` | true
 batch_mode | boolean | required | Enable batch mode. Default `true` | true 
@@ -81,7 +84,8 @@ push_after_build | boolean | required | Determine application (docker image) pus
     "metadata":{
         "app_name": "nx7u test",
         "app_description": "nx7u test",
-        "app_cover_image": "/home/user/cover_image.png"
+        "app_cover_image": "/home/user/cover_image.png",
+        "app_license": "/home/user/license.txt",
         "machines":["n2", "n3", "nx7u_xdma_201920_1"],
         "desktop_mode": true,
         "batch_mode": true
