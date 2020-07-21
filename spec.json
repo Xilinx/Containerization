@@ -21,5 +21,19 @@
 				"2019.2":{"platform": {"alveo-u200":"nx5u_xdma_201830_2_2_3", "alveo-u250":"nx6u_xdma_201830_2_2_3", "alveo-u280":"nx7u_xdma_201920_1", "alveo-u50": "nx_u50_gen3x16_xdma_201920_3"}}
 			}
 		}
+	},
+	"aws": {
+		"2019.2": {
+			"xrt": "https://aws-fpga-developer-ami.s3.amazonaws.com/1.8.0/Patches/XRT_2019_2/xrt_201920.2.3.0_7.7.1908-xrt.rpm",
+			"xrt-aws": "https://aws-fpga-developer-ami.s3.amazonaws.com/1.8.0/Patches/XRT_2019_2/xrt_201920.2.3.0_7.7.1908-aws.rpm"
+		},
+		"2019.1": {
+			"xrt": "https://aws-fpga-developer-ami.s3.amazonaws.com/1.7.0/Patches/XRT_2019_1_RC2/xrt_201910.2.2.0_7.6.1810-xrt.rpm",
+			"xrt-aws": "https://aws-fpga-developer-ami.s3.amazonaws.com/1.7.0/Patches/XRT_2019_1_RC2/xrt_201910.2.2.0_7.6.1810-aws.rpm"
+		},
+		"2018.3": {
+			"xrt": "https://aws-fpga-developer-ami.s3.amazonaws.com/1.6.0/Patches/XRT_2018_3_RC5/xrt_201830.2.1.0_7.6.1810-xrt.rpm",
+			"xrt-aws": "https://aws-fpga-developer-ami.s3.amazonaws.com/1.6.0/Patches/XRT_2018_3_RC5/xrt_201830.2.1.0_7.6.1810-aws.rpm"
+		}
 	}
 }

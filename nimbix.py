@@ -90,7 +90,7 @@ try:
     shutil.copy(example_path+'help.html.example', path + "/help.html")
     shutil.copy(example_path+'xilinx_runtime.sh.example', path + "/xilinx_runtime.sh")
 except OSError:
-    sys.exit(path)
+    sys.exit("[Error]: Can NOT create folder " + path)
 
 for pro in provisioners:
     ctype = pro['type']

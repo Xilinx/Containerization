@@ -6,7 +6,7 @@ The config file is a simple JSON object which is used to define:
 
 * Vendor
 * Metadata (metadata required by cloud vendors)
-* Application information (XRT version, OS version and target platform)
+* Application information (XRT version, OS version and target platform. Except for AWS. )
 * Provisioners (support two functions: inline command and copy files)
 * Post processor (build repository and tag)
 
@@ -15,7 +15,7 @@ The config file is a simple JSON object which is used to define:
 ## Vendor
 Key | Type | Required/Optional | Description | Example
 ----| ---- | ----------------- | ----------- | -------
-vendor | string | required | Application target cloud vendor. For now, only support "nimbix" and "on_premise"| "nimbix"
+vendor | string | required | Application target cloud vendor. | "nimbix" / "on_premise" / "aws"
 
 
 ## Metadata
@@ -37,7 +37,16 @@ machines | list of strings | required | Target platforms of application on Nimbi
 desktop_mode | boolean | required | Enable desktop mode. Default `true` | true
 batch_mode | boolean | required | Enable batch mode. Default `true` | true 
 
+### AWS
+
+Key | Type | Required/Optional | Description | Example
+----| ---- | ----------------- | ----------- | -------
+xrt_version | string | required | Xilinx Runtime versions match with the tool that you created your AFI with. | "2019.2"
+os_version | string | required | AWS only supports CentOS for now | "centos"
+
 ## Application information
+
+Only for Nimbix and on premise. AWS supports its own version and platform. Configure in section Metadata. 
 
 Key | Type | Required/Optional | Description | Available values
 ----| ---- | ----------------- | ----------- | -------

@@ -13,7 +13,7 @@ def print_help():
     print("  -h, --help            show this help message and exit")
     print("  -q, --quiet           only print error messages on stdout")
 
-support_vendors = ['nimbix', 'on_premise']
+support_vendors = ['nimbix', 'on_premise', 'aws']
 
 argvs = sys.argv[1:]
 isQuiet = False

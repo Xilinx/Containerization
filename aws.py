@@ -15,36 +15,25 @@ def copyanything(src, dst):
             shutil.copy(src, dst)
         else: raise
 
-def list_tags() :
-    sys.exit("XRT and platform do NOT match! \
-    Available platform and XRT combination:\
-    \
-    Platform       XRT Version                  OS Version\
-    alveo-u200     2018.3 /2019.1 / 2019.2      Ubuntu 16.04 / Ubuntu 18.04 / CentOS\
-    alveo-u250     2018.3 /2019.1 / 2019.2      Ubuntu 16.04 / Ubuntu 18.04 / CentOS\
-    alveo-u280     2019.2                       Ubuntu 16.04 / Ubuntu 18.04 / CentOS")
 
 with open('config.json') as d:
     repos = json.load(d)
 
 vendor = repos['vendor']
+metadata = repos['metadata']
 provisioners = repos['provisioners']
-app_info = repos['app_info']
 post_processors = repos['post_processors']
-if "metadata" in repos: 
-    metadata = repos['metadata']
 
-if vendor != "on_premise":
+if vendor != "aws":
     sys.exit("Vendor is NOT supported! ")
 
-if not app_info['os_version']:
+if not metadata['os_version']:
     sys.exit("OS version can NOT be empty!")
+elif metadata['os_version'] != "centos":
+    sys.exit("AWS only supports CentOS! ")
 
-if not app_info['xrt_version']:
+if not metadata['xrt_version']:
     sys.exit("XRT version can NOT be empty!")
-
-if not app_info['platform']:
-    sys.exit("Platform can NOT be empty!")
 
 if not post_processors['repository']:
     sys.exit("Repository can NOT be empty!")
@@ -53,24 +42,14 @@ if not post_processors['tag']:
 
 with open('spec.json') as d:
     spec = json.load(d)
+    spec = spec["aws"]
 
-# Xilinx Base Runtim Image Url
-image_url = "" 
-target_platforms = []
-if app_info['os_version'] in spec['os_version']:
-    if app_info['xrt_version'] in spec['os_version'][app_info['os_version']]['xrt_version']:
-        image_url = "xilinx/xilinx_runtime_base:" + "alveo" + "-" + app_info['xrt_version'] + "-" + app_info['os_version']
-        for platform in app_info['platform']:
-            if platform in spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform']:
-                target_platforms.append(spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform'][platform])
-                if platform == "alveo-u50" and app_info['xrt_version'] == "2019.2":
-                    image_url += "-u50"
-                    commands.append("ENV INTERNAL_BUILD=1")
-            else:
-                print(" [Warning] Invalide platform: " + platform)
-
-if not image_url:
-    list_tags()
+# XRT Packages
+if metadata['xrt_version'] in spec:
+    xrt_package = spec[metadata['xrt_version']]['xrt']
+    aws_package = spec[metadata['xrt_version']]['xrt-aws']
+else:
+    sys.exit("AWS supports XRT version: " + ", ".join(spec.keys()))
 
 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 path = "build_history/" + timestamp
@@ -80,7 +59,7 @@ try:
 except OSError:
     sys.exit("[Error]: Can NOT create folder " + path)
 
-commands = []
+commands = ["RUN curl -s "+xrt_package+" -o xrt.rpm; curl -s "+aws_package+" -o xrt_aws.rpm; yum install -y epel-release; yum install -y xrt*.rpm"]
 
 for pro in provisioners:
     ctype = pro['type']
@@ -96,7 +75,7 @@ for pro in provisioners:
         print("Warning: Unknown type: " + ctype + "! ")
 
 with open(path + "/Dockerfile", "w") as d:
-    d.write("From " + image_url + "\n")
+    d.write("From centos:7 \n")
     for command in commands:
         d.write(command + "\n")
     if metadata and "entrypoint" in metadata:
