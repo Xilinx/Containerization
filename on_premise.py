@@ -19,10 +19,11 @@ def list_tags() :
     sys.exit("XRT and platform do NOT match! \
     Available platform and XRT combination:\
     \
-    Platform       XRT Version                  OS Version\
-    alveo-u200     2018.3 /2019.1 / 2019.2      Ubuntu 16.04 / Ubuntu 18.04 / CentOS\
-    alveo-u250     2018.3 /2019.1 / 2019.2      Ubuntu 16.04 / Ubuntu 18.04 / CentOS\
-    alveo-u280     2019.2                       Ubuntu 16.04 / Ubuntu 18.04 / CentOS")
+    Platform       XRT Version                          OS Version\
+    alveo-u200     2018.3 /2019.1 / 2019.2 / 2020.1     Ubuntu 16.04 / Ubuntu 18.04 / CentOS\
+    alveo-u250     2018.3 /2019.1 / 2019.2 / 2020.1     Ubuntu 16.04 / Ubuntu 18.04 / CentOS\
+    alveo-u280     2019.2 / 2020.1                      Ubuntu 16.04 / Ubuntu 18.04 / CentOS\
+    alveo-u50      2019.2 / 2020.1                      Ubuntu 16.04 / Ubuntu 18.04 / CentOS")
 
 with open('config.json') as d:
     repos = json.load(d)
