@@ -87,6 +87,8 @@ push_after_build | boolean | required | Determine application (docker image) pus
 
 # Config file example
 
+## Nimbix
+
 ```
 {
     "vendor": "nimbix",
@@ -100,10 +102,10 @@ push_after_build | boolean | required | Determine application (docker image) pus
         "batch_mode": true
     },
     "provisioners":[
-    	{
-    		"type": "shell",
-    		"inline": ["mkdir -p /opt/xilinx/test", "apt-get update"]
-    	},
+        {
+            "type": "shell",
+            "inline": ["mkdir -p /opt/xilinx/test", "apt-get update"]
+        },
         {
             "type": "file",
             "source": "/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/validate.exe",
@@ -117,13 +119,83 @@ push_after_build | boolean | required | Determine application (docker image) pus
     ],
     "post_processors": {
         "repository": "xilinx/test",
-        "tag": "nx7u-test",
+        "tag": "nimbix-test",
         "push_after_build": true
     },
     "app_info":{
         "xrt_version": "2019.2",
         "os_version": "ubuntu-16.04",
         "platform": ["alveo-u280"]
+    }
+}
+```
+
+## On Premise
+
+```
+{
+    "vendor": "on_premise",
+    "metadata": {
+        "entrypoint": '["executable", "param1", "param2"]'
+    },
+    "provisioners":[
+        {
+            "type": "shell",
+            "inline": ["mkdir -p /opt/xilinx/test", "apt-get update"]
+        },
+        {
+            "type": "file",
+            "source": "/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/validate.exe",
+            "destination": "/opt/xilinx/test/validate.exe"
+        },
+        {
+            "type": "file",
+            "source": "/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/verify.xclbin",
+            "destination": "/opt/xilinx/test/verify.xclbin"
+        }
+    ],
+    "post_processors": {
+        "repository": "xilinx/test",
+        "tag": "on-premise-test",
+        "push_after_build": true
+    },
+    "app_info":{
+        "xrt_version": "2019.2",
+        "os_version": "ubuntu-16.04",
+        "platform": ["alveo-u280"]
+    }
+}
+```
+
+## AWS
+
+```
+{
+    "vendor": "on_premise",
+    "metadata": {
+        "xrt_version": "2019.2",
+        "os_version": "centos"
+    },
+    "provisioners":[
+        {
+            "type": "shell",
+            "inline": ["mkdir -p /opt/xilinx/test", "yum update"]
+        },
+        {
+            "type": "file",
+            "source": "/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/validate.exe",
+            "destination": "/opt/xilinx/test/validate.exe"
+        },
+        {
+            "type": "file",
+            "source": "/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/verify.awsxclbin",
+            "destination": "/opt/xilinx/test/verify.aws`xclbin"
+        }
+    ],
+    "post_processors": {
+        "repository": "xilinx/test",
+        "tag": "aws-test",
+        "push_after_build": true
     }
 }
 ```

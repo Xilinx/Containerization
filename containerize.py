@@ -7,7 +7,7 @@ import sys
 import shutil, errno
 
 def print_help():
-    print("usage: ./nimbixlize.py [-h] [-q]")
+    print("usage: ./containerize.py [-h] [-q]")
     print("")
     print("optional arguments:")
     print("  -h, --help            show this help message and exit")
