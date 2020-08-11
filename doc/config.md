@@ -189,7 +189,7 @@ push_after_build | boolean | required | Determine application (docker image) pus
         {
             "type": "file",
             "source": "/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/verify.awsxclbin",
-            "destination": "/opt/xilinx/test/verify.aws`xclbin"
+            "destination": "/opt/xilinx/test/verify.awsxclbin"
         }
     ],
     "post_processors": {
