@@ -58,7 +58,7 @@ if not post_processors['repository']:
 if not post_processors['tag']:
     sys.exit("Tag can NOT be empty!")
 
-if metadata['internal']:
+if "internal" in metadata and metadata['internal']:
     internal = True
 
 
