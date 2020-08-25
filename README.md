@@ -97,6 +97,12 @@ If you need Nimbix account, please contact Tianyu Li (tianyul@xilinx.com) or Chu
 
 9. You can change the application icon by clicking menu icon, then "Edit", then "Change Icon". 
 
+### FAQ
+
+Q: How could I put readme file on desktop when I launch a Nimbix job?
+
+A: Nimbix launches a job in "Desktop Mode" using "nimbix" as user. It will duplicate folder "/etc/skel" to "/home/nimbix" as user home directory. Therefore if you want to put a readme file on desktop, please `mkdir -p /etc/skel/Desktop` then set "destination" in "provisioners" section as `/etc/skel/readme.txt`. Also you can modify `/etc/skel/.bashrc` to add startup script when you open the terminal. 
+
 ### Useful links
 
 Please check these links for more details. 

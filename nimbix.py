@@ -58,28 +58,37 @@ if not post_processors['repository']:
 if not post_processors['tag']:
     sys.exit("Tag can NOT be empty!")
 
+if metadata['internal']:
+    internal = True
+
+
 with open('spec.json') as d:
     spec = json.load(d)
 
 commands = []
 
 # Xilinx Base Runtim Image Url
+
 image_url = "" 
 target_platforms = []
-if app_info['os_version'] in spec['os_version']:
-    if app_info['xrt_version'] in spec['os_version'][app_info['os_version']]['xrt_version']:
-        image_url = "xilinx/xilinx_runtime_base:" + "alveo" + "-" + app_info['xrt_version'] + "-" + app_info['os_version']
-        for platform in app_info['platform']:
-            if platform in spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform']:
-                target_platforms.append(spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform'][platform])
-                if platform == "alveo-u50" and app_info['xrt_version'] == "2019.2":
-                    image_url += "-u50"
-                    commands.append("ENV INTERNAL_BUILD=1")
-            else:
-                print(" [Warning] Invalide platform: " + platform)
 
-if not image_url:
-    list_tags()
+if internal:
+    image_url = "xdock.xilinx.com/base_runtime:" + post_processors['tag'] + "-" + app_info['os_version']
+else:
+    if app_info['os_version'] in spec['os_version']:
+        if app_info['xrt_version'] in spec['os_version'][app_info['os_version']]['xrt_version']:
+            image_url = "xilinx/xilinx_runtime_base:" + "alveo" + "-" + app_info['xrt_version'] + "-" + app_info['os_version']
+            for platform in app_info['platform']:
+                if platform in spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform']:
+                    target_platforms.append(spec['os_version'][app_info['os_version']]['xrt_version'][app_info['xrt_version']]['platform'][platform])
+                    if platform == "alveo-u50" and app_info['xrt_version'] == "2019.2":
+                        image_url += "-u50"
+                        commands.append("ENV INTERNAL_BUILD=1")
+                else:
+                    print(" [Warning] Invalide platform: " + platform)
+
+    if not image_url:
+        list_tags()
 
 dockerfile_example = example_path + ("Dockerfile_Centos.example" if app_info['os_version'] == "centos" else "Dockerfile_Ubuntu.example")
 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
