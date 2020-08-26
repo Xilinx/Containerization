@@ -21,6 +21,11 @@
             "type": "file",
             "source": "/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/verify.xclbin",
             "destination": "/opt/xilinx/test/verify.xclbin"
+        },
+        {
+            "type": "lable",
+            "key": "version",
+            "valule": "1.0"
         }
     ],
     "post_processors": {

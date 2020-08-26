@@ -67,6 +67,7 @@ with open('spec.json') as d:
     spec = json.load(d)
 
 commands = []
+labels = {}
 
 # Xilinx Base Runtim Image Url
 
@@ -112,6 +113,8 @@ for pro in provisioners:
         filename = os.path.basename(os.path.normpath(pro['destination']))
         copyanything(pro['source'], path + "/" + filename)
         commands.append("COPY " + filename + " " + pro['destination'])
+    elif ctype == 'label':
+        labels[pro['key']] = pro['value']
     else:
         print("Warning: Unknown type: " + ctype + "! ")
 
@@ -143,6 +146,11 @@ with open(dockerfile_example, "r") as f:
         d.write(s)
         for command in commands:
             d.write(command + "\n")
+        if labels:
+            label_str = 'LABEL '
+            for key in labels:
+                label_str += key + '="' + labels[key] + '" '
+            d.write(label_str + "\n")
 
 appdef['name'] = metadata['app_name']
 appdef['description'] = metadata['app_description']
@@ -174,5 +182,6 @@ else:
     print("Push docker image by running:")
     print("    docker push " + post_processors['repository'] + ":" + post_processors["tag"])
 
+print("Build history: " + path)
 print("Build successfully!")
 exit(0)

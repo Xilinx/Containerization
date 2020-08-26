@@ -60,6 +60,7 @@ except OSError:
     sys.exit("[Error]: Can NOT create folder " + path)
 
 commands = ["RUN curl -s "+xrt_package+" -o xrt.rpm; curl -s "+aws_package+" -o xrt_aws.rpm; yum install -y epel-release; yum install -y xrt*.rpm"]
+labels = {}
 
 for pro in provisioners:
     ctype = pro['type']
@@ -71,6 +72,8 @@ for pro in provisioners:
         filename = os.path.basename(os.path.normpath(pro['destination']))
         copyanything(pro['source'], path + "/" + filename)
         commands.append("COPY " + filename + " " + pro['destination'])
+    elif ctype == 'label':
+        labels[pro['key']] = pro['value']
     else:
         print("Warning: Unknown type: " + ctype + "! ")
 
@@ -78,6 +81,11 @@ with open(path + "/Dockerfile", "w") as d:
     d.write("From centos:7 \n")
     for command in commands:
         d.write(command + "\n")
+    if labels:
+        label_str = 'LABEL '
+        for key in labels:
+            label_str += key + '="' + labels[key] + '" '
+        d.write(label_str + "\n")
     if metadata and "entrypoint" in metadata:
         d.write("ENTRYPOINT " + metadata['entrypoint'])
 
@@ -93,5 +101,6 @@ if post_processors['push_after_build']:
     subprocess.check_call("docker push " + post_processors['repository'] + ":" + post_processors["tag"],
     stderr=subprocess.STDOUT, shell=True)
 
+print("Build history: " + path)
 print("Build successfully!")
 exit(0)

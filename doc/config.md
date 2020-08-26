@@ -67,13 +67,23 @@ inline | list of strings (commands) | required | List of commands | `[ "mkdir -p
 
 ### Copy files
 
-Copy local files to your Nimbix applications. 
+Copy local files to your docker applications. 
 
 Key | Type | Required/Optional | Description | Example
 ----| ---- | ----------------- | ----------- | -------
 type | string | required | Type of provisioner. Must be `file` | "file"
 source | path | required | Source path of your local file or directory | `/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/validate.exe`
 destination | path | required | Destination path of file or directory located in application | `/opt/xilinx/test/validate.exe`
+
+### Labels
+
+Add `LABEL`, a key-value pair, to your docker application's metadata. 
+
+Key | Type | Required/Optional | Description | Example
+----| ---- | ----------------- | ----------- | -------
+type | string | required | Type of provisioner. Must be `label` | "label"
+key | string | required | The key of the label | `version`
+value | string | required | The value of the label | `1.0`
 
 ## Post processor
 
@@ -115,6 +125,11 @@ push_after_build | boolean | required | Determine application (docker image) pus
             "type": "file",
             "source": "/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/verify.xclbin",
             "destination": "/opt/xilinx/test/verify.xclbin"
+        },
+        {
+            "type": "lable",
+            "key": "version",
+            "valule": "1.0"
         }
     ],
     "post_processors": {
@@ -152,6 +167,11 @@ push_after_build | boolean | required | Determine application (docker image) pus
             "type": "file",
             "source": "/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/verify.xclbin",
             "destination": "/opt/xilinx/test/verify.xclbin"
+        },
+        {
+            "type": "lable",
+            "key": "version",
+            "valule": "1.0"
         }
     ],
     "post_processors": {
@@ -190,6 +210,11 @@ push_after_build | boolean | required | Determine application (docker image) pus
             "type": "file",
             "source": "/opt/xilinx/xsa/xilinx_u280_xdma_201920_1/test/verify.awsxclbin",
             "destination": "/opt/xilinx/test/verify.awsxclbin"
+        },
+        {
+            "type": "lable",
+            "key": "version",
+            "valule": "1.0"
         }
     ],
     "post_processors": {
