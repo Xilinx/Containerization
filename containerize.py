@@ -5,6 +5,11 @@ import subprocess
 import os
 import sys
 import shutil, errno
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-path', help = 'the config.json path')
+args = parser.parse_args()
 
 def print_help():
     print("usage: ./containerize.py [-h] [-q]")
@@ -24,9 +29,12 @@ for argv in argvs:
     elif argv == "-h" or argv == "--help":
         print_help()
         exit(0)
-
-with open('config.json') as d:
-    repos = json.load(d)
+if args.path:
+    with open(os.path.join(args.path, "config.json")) as d:
+        repos = json.load(d)
+else:
+    with open('config.json') as d:
+        repos = json.load(d)
 
 vendor = repos['vendor']
 
