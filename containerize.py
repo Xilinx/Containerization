@@ -41,7 +41,13 @@ vendor = repos['vendor']
 if vendor not in support_vendors:
     sys.exit("Vendor is NOT supported! Support Vendors: " + ", ".join(support_vendors))
 
-if isQuiet: 
-    subprocess.check_output("./" + vendor + ".py", stderr=subprocess.STDOUT, shell=True)
-else: 
-    subprocess.call("./" + vendor + ".py", stderr=subprocess.STDOUT, shell=True)
+if args.path:
+    if isQuiet: 
+        subprocess.check_output("./" + vendor + ".py " + "-path " + args.path , stderr=subprocess.STDOUT, shell=True)
+    else: 
+        subprocess.call("./" + vendor + ".py " + "-path " + args.path , stderr=subprocess.STDOUT, shell=True)
+else:
+    if isQuiet:
+        subprocess.check_output("./" + vendor + ".py ", stderr=subprocess.STDOUT, shell=True)
+    else:
+        subprocess.call("./" + vendor + ".py " , stderr=subprocess.STDOUT, shell=True)
