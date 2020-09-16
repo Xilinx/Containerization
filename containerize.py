@@ -5,6 +5,11 @@ import subprocess
 import os
 import sys
 import shutil, errno
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-path', help = 'the config.json path')
+args = parser.parse_args()
 
 def print_help():
     print("usage: ./containerize.py [-h] [-q]")
@@ -25,15 +30,25 @@ for argv in argvs:
         print_help()
         exit(0)
 
-with open('config.json') as d:
-    repos = json.load(d)
+if args.path:
+    with open(args.path) as d:
+        repos = json.load(d)
+else:
+    with open('config.json') as d:
+        repos = json.load(d)
 
 vendor = repos['vendor']
 
 if vendor not in support_vendors:
     sys.exit("Vendor is NOT supported! Support Vendors: " + ", ".join(support_vendors))
 
-if isQuiet: 
-    subprocess.check_output("./" + vendor + ".py", stderr=subprocess.STDOUT, shell=True)
-else: 
-    subprocess.call("./" + vendor + ".py", stderr=subprocess.STDOUT, shell=True)
+if args.path:
+    if isQuiet: 
+        subprocess.check_output("./" + vendor + ".py " + "-path " + args.path , stderr=subprocess.STDOUT, shell=True)
+    else: 
+        subprocess.call("./" + vendor + ".py " + "-path " + args.path , stderr=subprocess.STDOUT, shell=True)
+else:
+    if isQuiet:
+        subprocess.check_output("./" + vendor + ".py ", stderr=subprocess.STDOUT, shell=True)
+    else:
+        subprocess.call("./" + vendor + ".py " , stderr=subprocess.STDOUT, shell=True)
