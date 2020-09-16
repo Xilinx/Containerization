@@ -29,8 +29,9 @@ for argv in argvs:
     elif argv == "-h" or argv == "--help":
         print_help()
         exit(0)
+
 if args.path:
-    with open(os.path.join(args.path, "config.json")) as d:
+    with open(args.path) as d:
         repos = json.load(d)
 else:
     with open('config.json') as d:

@@ -31,7 +31,7 @@ def list_tags() :
     alveo-u50      2019.2 / 2020.1                      Ubuntu 16.04 / Ubuntu 18.04 / CentOS")
 
 if args.path:
-    with open(os.path.join(args.path, "config.json")) as d:
+    with open(args.path) as d:
         repos = json.load(d)
 else:
     with open('config.json') as d:
