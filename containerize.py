@@ -8,13 +8,14 @@ import shutil, errno
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-path', help = 'the config.json path')
+parser.add_argument('-path', help = 'the config file path, default as config.json')
 args = parser.parse_args()
 
 def print_help():
-    print("usage: ./containerize.py [-h] [-q]")
+    print("usage: ./containerize.py [-path] [-h] [-q]")
     print("")
     print("optional arguments:")
+    print("  -path,                the config file path, default as config.json")
     print("  -h, --help            show this help message and exit")
     print("  -q, --quiet           only print error messages on stdout")
 

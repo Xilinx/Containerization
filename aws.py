@@ -5,7 +5,11 @@ import subprocess
 import os
 import sys
 import datetime
-import shutil, errno
+import shutil, errnoimport argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-path', help = 'the config file path, default as config.json')
+args = parser.parse_args()
 
 def copyanything(src, dst):
     try:
@@ -16,8 +20,12 @@ def copyanything(src, dst):
         else: raise
 
 
-with open('config.json') as d:
-    repos = json.load(d)
+if args.path:
+    with open(args.path) as d:
+        repos = json.load(d)
+else:
+    with open('config.json') as d:
+        repos = json.load(d)
 
 vendor = repos['vendor']
 metadata = repos['metadata']

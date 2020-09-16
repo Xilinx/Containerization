@@ -5,7 +5,11 @@ import subprocess
 import os
 import sys
 import datetime
-import shutil, errno
+import shutil, errnoimport argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-path', help = 'the config file path, default as config.json')
+args = parser.parse_args()
 
 def copyanything(src, dst):
     try:
@@ -25,8 +29,12 @@ def list_tags() :
     alveo-u280     2019.2 / 2020.1                      Ubuntu 16.04 / Ubuntu 18.04 / CentOS\
     alveo-u50      2019.2 / 2020.1                      Ubuntu 16.04 / Ubuntu 18.04 / CentOS")
 
-with open('config.json') as d:
-    repos = json.load(d)
+if args.path:
+    with open(args.path) as d:
+        repos = json.load(d)
+else:
+    with open('config.json') as d:
+        repos = json.load(d)
 
 vendor = repos['vendor']
 provisioners = repos['provisioners']

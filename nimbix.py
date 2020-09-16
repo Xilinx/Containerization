@@ -9,7 +9,7 @@ import shutil, errno
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-path', help = 'the config.json path')
+parser.add_argument('-path', help = 'the config file path, default as config.json')
 args = parser.parse_args()
 
 def copyanything(src, dst):
