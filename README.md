@@ -20,7 +20,7 @@ PushToCompute™ is an advanced developer pipeline that enables you to create, b
 
 ## Getting Started
 
-To distribute FPGA applications on cloud vendors, you need build docker images contain FPGA app files (like xclbin files) and required metadata. The tutorial mainly contains two parts: prerequisites and buuild application flow. 
+To distribute FPGA applications on cloud vendors, you need build docker images contain FPGA app files (like xclbin files) and required metadata. The tutorial mainly contains two parts: prerequisites and build application flow. 
 
 ### Prerequisites
 
